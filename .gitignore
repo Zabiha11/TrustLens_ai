@@ -6,3 +6,5 @@ venv/
 uploads/*
 !uploads/.gitkeep
 data/prediction_stats.json
+# Large datasets
+data/YelpChi/YelpChi.mat
