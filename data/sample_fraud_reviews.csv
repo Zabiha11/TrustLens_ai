@@ -1,0 +1,31 @@
+user_id,product_id,review_text,rating,timestamp
+USER_101,PROD_AUDIO_01,"The sound quality on these headphones is crisp and clear. Battery lasts for days!",5.0,2026-07-15 09:30:00
+USER_102,PROD_AUDIO_01,"Decent audio for the price. Ergonomics could be slightly better.",4.0,2026-07-15 11:15:00
+USER_103,PROD_TECH_01,"Very solid build quality. Highly recommended for daily office work.",5.0,2026-07-16 14:20:00
+USER_104,PROD_HOME_05,"Works as advertised. Setup took less than five minutes.",4.0,2026-07-16 16:45:00
+USER_105,PROD_TECH_02,"Clean minimalist design and fast performance. Will purchase again.",5.0,2026-07-17 10:05:00
+USER_BOT_1,PROD_TECH_01,"Extremely high quality item! Exceeded all expectations, fast shipping!",5.0,2026-07-22 14:02:00
+USER_BOT_2,PROD_TECH_01,"Extremely high quality item! Exceeded all expectations, fast shipping!",5.0,2026-07-22 14:04:12
+USER_BOT_3,PROD_TECH_01,"Extremely high quality item! Exceeded all expectations, fast shipping!",5.0,2026-07-22 14:06:45
+USER_BOT_4,PROD_TECH_01,"Extremely high quality item! Exceeded all expectations, fast shipping!",5.0,2026-07-22 14:09:10
+USER_BOT_5,PROD_TECH_01,"Extremely high quality item! Exceeded all expectations, fast shipping!",5.0,2026-07-22 14:12:30
+USER_BOT_1,PROD_TECH_02,"Outstanding performance and premium build. Highly recommended seller!",5.0,2026-07-22 14:15:00
+USER_BOT_2,PROD_TECH_02,"Outstanding performance and premium build. Highly recommended seller!",5.0,2026-07-22 14:16:22
+USER_BOT_3,PROD_TECH_02,"Outstanding performance and premium build. Highly recommended seller!",5.0,2026-07-22 14:18:05
+USER_BOT_4,PROD_TECH_02,"Outstanding performance and premium build. Highly recommended seller!",5.0,2026-07-22 14:19:40
+USER_BOT_5,PROD_TECH_02,"Outstanding performance and premium build. Highly recommended seller!",5.0,2026-07-22 14:21:15
+USER_SMEAR_1,PROD_COMP_99,"Total scam product! Stopped working after one hour. Horrible customer service!",1.0,2026-07-21 09:05:00
+USER_SMEAR_2,PROD_COMP_99,"Total scam product! Stopped working after one hour. Horrible customer service!",1.0,2026-07-21 09:08:30
+USER_SMEAR_3,PROD_COMP_99,"Total scam product! Stopped working after one hour. Horrible customer service!",1.0,2026-07-21 09:11:15
+USER_SMEAR_4,PROD_COMP_99,"Do not buy this garbage. Defective item, requested full refund immediately.",1.0,2026-07-21 09:14:00
+USER_SPAM_99,PROD_GEAR_01,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:00:00
+USER_SPAM_99,PROD_GEAR_02,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:02:00
+USER_SPAM_99,PROD_GEAR_03,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:04:00
+USER_SPAM_99,PROD_GEAR_04,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:06:00
+USER_SPAM_99,PROD_GEAR_05,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:08:00
+USER_SPAM_99,PROD_GEAR_06,"Best product ever five stars buy now super fast delivery A+++++",5.0,2026-07-23 08:10:00
+USER_106,PROD_AUDIO_01,"Great noise cancellation feature. Perfect for traveling on long flights.",5.0,2026-07-18 15:30:00
+USER_107,PROD_HOME_05,"Works well overall but instruction manual was a bit confusing.",3.0,2026-07-19 12:10:00
+USER_108,PROD_TECH_02,"Smooth interface and good battery life. Satisfied with this purchase.",4.0,2026-07-20 18:45:00
+USER_109,PROD_COMP_99,"It is an okay product, but a bit overpriced compared to competitors.",3.0,2026-07-20 20:00:00
+USER_110,PROD_GEAR_01,"Solid materials and fast delivery. Happy customer here.",5.0,2026-07-21 11:30:00

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Reviewer Risk Analysis — {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up">
+      <h1 class="page-title"><i class="bi bi-shield-exclamation me-2 text-danger"></i>Reviewer Risk Score Profiler</h1>
+      <p class="text-muted">Behavioral risk scoring engine analyzing review frequency, rating variance, duplication, and posting velocity.</p>
+    </div>
+
+    <!-- Risk Overview Stat Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-4 fade-up">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-info-subtle"><i class="bi bi-person-badge"></i></div>
+          <div>
+            <div class="stat-number" id="riskTotalReviewers">—</div>
+            <div class="stat-desc">Total Active Reviewers</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up delay-1">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-danger-subtle"><i class="bi bi-exclamation-octagon"></i></div>
+          <div>
+            <div class="stat-number text-danger" id="riskHighRiskCount">—</div>
+            <div class="stat-desc">Suspicious / High-Risk Users</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up delay-2">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-warning-subtle"><i class="bi bi-activity"></i></div>
+          <div>
+            <div class="stat-number text-warning" id="riskAvgScore">—</div>
+            <div class="stat-desc">Average Risk Score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviewer Risk Scores Table -->
+    <div class="glass-card fade-up delay-3">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
+        <h5 class="mb-0"><i class="bi bi-table me-2"></i>Reviewer Risk Score Directory</h5>
+        
+        <div class="d-flex gap-2">
+          <input type="text" id="reviewerSearch" class="form-control form-control-sm tl-input" placeholder="Search User ID...">
+          <select id="riskLevelFilter" class="form-select form-select-sm tl-input" style="width: 150px;">
+            <option value="ALL">All Risk Levels</option>
+            <option value="Critical">Critical</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-dark table-hover tl-table mb-0">
+          <thead>
+            <tr>
+              <th>Reviewer ID</th>
+              <th>Risk Score</th>
+              <th>Risk Level</th>
+              <th>Total Reviews</th>
+              <th>Avg Rating</th>
+              <th>Products</th>
+              <th>Duplication Score</th>
+              <th>Velocity Score</th>
+            </tr>
+          </thead>
+          <tbody id="reviewerTableBody">
+            <tr><td colspan="8" class="text-muted text-center py-4">Loading reviewer profiles...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/risk.js') }}"></script>
+{% endblock %}

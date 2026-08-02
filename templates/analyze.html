@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Analyze Review — {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up">
+      <h1 class="page-title"><i class="bi bi-search me-2"></i>Analyze Review</h1>
+      <p class="text-muted">Submit a single review or upload a CSV for batch fraud detection.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Product URL Analyzer -->
+      <div class="col-lg-12 fade-up">
+        <div class="glass-card analyze-card h-100">
+          <div class="card-label"><i class="bi bi-box-arrow-up-right me-1"></i> Product URL Analyzer</div>
+          <form id="productUrlForm" class="mb-3">
+            <div class="mb-3">
+              <label for="productUrl" class="form-label">Product URL</label>
+              <input id="productUrl" class="form-control tl-input" placeholder="Paste a public product page URL" />
+            </div>
+            <button type="submit" class="btn btn-outline-secondary w-100" id="productUrlBtn">
+              <span class="btn-text"><i class="bi bi-globe2 me-2"></i>Fetch Reviews & Analyze</span>
+              <span class="btn-spinner d-none"><span class="spinner-border spinner-border-sm me-2"></span>Fetching...</span>
+            </button>
+          </form>
+          <p class="text-muted small mb-0">If automatic retrieval is not possible, the app will show a clear error explaining the restriction.</p>
+        </div>
+      </div>
+
+      <!-- Single Review -->
+      <div class="col-lg-6 fade-up">
+        <div class="glass-card analyze-card h-100">
+          <div class="card-label"><i class="bi bi-pencil-square me-1"></i> Single Review</div>
+          <form id="reviewForm">
+            <div class="mb-3">
+              <label for="reviewText" class="form-label">Review Text</label>
+              <textarea id="reviewText" class="form-control tl-input" rows="6" placeholder="Paste review content here..." required></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="reviewRating" class="form-label">Rating (1–5)</label>
+              <input type="number" id="reviewRating" class="form-control tl-input" min="1" max="5" step="0.5" value="3">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 tl-btn-glow" id="predictBtn">
+              <span class="btn-text"><i class="bi bi-shield-check me-2"></i>Run Detection</span>
+              <span class="btn-spinner d-none"><span class="spinner-border spinner-border-sm me-2"></span>Analyzing...</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- CSV Upload -->
+      <div class="col-lg-6 fade-up delay-1">
+        <div class="glass-card analyze-card h-100">
+          <div class="card-label"><i class="bi bi-cloud-upload me-1"></i> CSV Batch Upload</div>
+          <div class="upload-zone" id="uploadZone">
+            <i class="bi bi-file-earmark-arrow-up upload-icon"></i>
+            <p class="mb-1">Drag & drop CSV or click to browse</p>
+            <small class="text-muted">Requires <code>review_text</code> column; optional <code>rating</code></small>
+            <input type="file" id="csvFile" accept=".csv" hidden>
+          </div>
+          <button type="button" class="btn btn-outline-info w-100 mt-3" id="uploadBtn" disabled>
+            <span class="btn-text"><i class="bi bi-upload me-2"></i>Upload & Analyze</span>
+            <span class="btn-spinner d-none"><span class="spinner-border spinner-border-sm me-2"></span>Processing...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="resultSection" class="mt-4 d-none fade-up">
+      <div class="glass-card result-card" id="singleResult"></div>
+    </div>
+
+    <div id="batchSection" class="mt-4 d-none fade-up">
+      <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0"><i class="bi bi-table me-2"></i>Batch Results</h5>
+          <span class="badge bg-info" id="batchCount"></span>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-dark table-hover tl-table mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Review</th>
+                <th>Rating</th>
+                <th>Prediction</th>
+                <th>Confidence</th>
+              </tr>
+            </thead>
+            <tbody id="batchTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}

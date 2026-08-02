@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Fraud Investigation — {{ app_name }}{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h1 class="page-title"><i class="bi bi-search-heart me-2"></i>Fraud Investigation Workspace</h1>
+        <p class="text-muted mb-0">A handcrafted investigation view for network analysis, reviewer risk, temporal bursts, trust scoring, and AI-generated review detection.</p>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <div class="btn-group" role="group" aria-label="Export investigation report">
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="exportJsonBtn">Download JSON</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="exportPdfBtn">Save as PDF</button>
+        </div>
+        <span class="badge bg-secondary-subtle border px-3 py-2 fs-6" style="color: #4b5563;">
+          <i class="bi bi-diagram-3 me-1"></i>Interactive Intelligence Suite
+        </span>
+      </div>
+    </div>
+
+    <div id="printReport" class="glass-card d-none d-print-block mb-4"></div>
+
+    <div class="row g-4 my-3">
+      <div class="col-lg-8 fade-up">
+        <div class="glass-card h-100">
+          <div class="card-label">Case Summary</div>
+          <h4 class="mb-3">Investigation Overview</h4>
+          <p class="text-muted mb-0">The dashboard unifies fraud signals from text analysis, reviewer communities, suspicious timing patterns, AI-generation markers, and trust score analytics into one professional workspace.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 fade-up delay-1">
+        <div class="glass-card h-100">
+          <div class="card-label">Current Focus</div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Trust Score</span>
+            <strong id="summaryTrust">—</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">High Risk Reviewers</span>
+            <strong id="summaryHighRisk">—</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">AI Signals</span>
+            <strong id="summaryAI">—</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-diagram-3 me-2"></i>Fraud Network Graph</h5>
+          <div id="networkGraph" class="investigation-plot"></div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-up delay-1">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-people me-2"></i>Reviewer Community Graph</h5>
+          <div id="communityGraph" class="investigation-plot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-7 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-graph-up-arrow me-2"></i>Temporal Fraud Timeline</h5>
+          <div id="temporalChart" class="investigation-plot"></div>
+        </div>
+      </div>
+      <div class="col-lg-5 fade-up delay-1">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-pie-chart me-2"></i>Review Distribution</h5>
+          <div id="distributionChart" class="investigation-plot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-shield-check me-2"></i>Trust Score Analytics</h5>
+          <div id="trustScoreChart" class="investigation-plot"></div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-up delay-1">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-cpu me-2"></i>AI-Generated Review Statistics</h5>
+          <div id="aiStatsChart" class="investigation-plot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-12 fade-up">
+        <div class="glass-card">
+          <h5 class="chart-title"><i class="bi bi-award me-2"></i>Reviewer Risk Rankings</h5>
+          <div class="table-responsive">
+            <table class="table table-hover tl-table mb-0">
+              <thead>
+                <tr>
+                  <th>Reviewer</th>
+                  <th>Risk Score</th>
+                  <th>Risk Level</th>
+                  <th>Reviews</th>
+                  <th>Avg Rating</th>
+                </tr>
+              </thead>
+              <tbody id="riskTableBody">
+                <tr><td colspan="5" class="text-muted text-center py-4">Loading investigation data…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/investigation.js') }}"></script>
+{% endblock %}

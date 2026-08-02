@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Reviewer Network Analysis — {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h1 class="page-title"><i class="bi bi-diagram-3 me-2 text-cyan"></i>Reviewer Network & Community Analysis</h1>
+        <p class="text-muted mb-0">Bipartite User-Product graph with Louvain Community Detection for coordinated ring detection.</p>
+      </div>
+      <button class="btn btn-outline-cyan btn-sm" id="reloadGraphBtn">
+        <i class="bi bi-arrow-clockwise me-1"></i>Refresh Graph
+      </button>
+    </div>
+
+    <!-- Network Summary Stat Cards -->
+    <div class="row g-4 my-3">
+      <div class="col-md-3 fade-up">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-info-subtle"><i class="bi bi-people"></i></div>
+          <div>
+            <div class="stat-number" id="netUsers">—</div>
+            <div class="stat-desc">Reviewers (Users)</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-1">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-warning-subtle"><i class="bi bi-box-seam"></i></div>
+          <div>
+            <div class="stat-number text-warning" id="netProducts">—</div>
+            <div class="stat-desc">Targeted Products</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-2">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-cyan-subtle"><i class="bi bi-share"></i></div>
+          <div>
+            <div class="stat-number text-cyan" id="netEdges">—</div>
+            <div class="stat-desc">Total Interactions</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-3">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-danger-subtle"><i class="bi bi-diagram-2"></i></div>
+          <div>
+            <div class="stat-number text-danger" id="netCommunities">—</div>
+            <div class="stat-desc">Louvain Communities</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PyVis Interactive Graph Container -->
+    <div class="glass-card mb-4 fade-up">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0"><i class="bi bi-bounding-box-circles me-2"></i>Interactive PyVis Network Topology</h5>
+        <span class="badge bg-dark border text-muted"><i class="bi bi-mouse me-1"></i>Zoom, Drag & Click Nodes</span>
+      </div>
+      
+      <!-- Graph Frame Wrapper -->
+      <div class="network-container position-relative" style="min-height: 550px; background: #0b1120; border-radius: 12px; overflow: hidden; border: 1px solid var(--tl-border);">
+        <div id="graphLoader" class="position-absolute inset-0 d-flex flex-column align-items-center justify-content-center bg-dark bg-opacity-75 z-3">
+          <div class="spinner-border text-cyan mb-2" role="status"></div>
+          <span class="text-muted small">Generating PyVis Network Graph...</span>
+        </div>
+        <iframe id="pyvisIframe" style="width: 100%; height: 550px; border: none; display: none;"></iframe>
+      </div>
+    </div>
+
+    <!-- Coordinated Reviewer Detection Table -->
+    <div class="glass-card fade-up">
+      <h5 class="mb-3"><i class="bi bi-bounding-box me-2"></i>Detected Coordinated Reviewer Clusters (Louvain Algorithm)</h5>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover tl-table mb-0">
+          <thead>
+            <tr>
+              <th>Cluster ID</th>
+              <th>Reviewers Count</th>
+              <th>Targeted Products</th>
+              <th>Average Rating</th>
+              <th>Suspicion Score</th>
+              <th>Risk Level</th>
+            </tr>
+          </thead>
+          <tbody id="clustersTableBody">
+            <tr><td colspan="6" class="text-muted text-center py-4">Loading clusters...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/network.js') }}"></script>
+{% endblock %}

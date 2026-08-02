@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — {{ app_name }}{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h1 class="page-title"><i class="bi bi-speedometer2 me-2 text-cyan"></i>Fraud Intelligence Dashboard</h1>
+        <p class="text-muted mb-0">Unified platform overview combining text ML classification, network graph clusters, risk scoring, temporal bursts, and Explainable AI (SHAP/LIME).</p>
+      </div>
+      <span class="badge bg-cyan-subtle border text-cyan px-3 py-2 fs-6">
+        <i class="bi bi-shield-check me-1"></i>Phase 3 Active · Explainable AI
+      </span>
+    </div>
+
+    <!-- Row 1: Primary Classification Stat Cards -->
+    <div class="row g-3 my-3">
+      <div class="col-md-3 fade-up">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-info-subtle"><i class="bi bi-collection"></i></div>
+          <div>
+            <div class="stat-number" id="statTotal">—</div>
+            <div class="stat-desc">Total Analyzed</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-1">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-danger-subtle"><i class="bi bi-exclamation-triangle"></i></div>
+          <div>
+            <div class="stat-number text-danger" id="statFake">—</div>
+            <div class="stat-desc">Fake Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-2">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-success-subtle"><i class="bi bi-check-circle"></i></div>
+          <div>
+            <div class="stat-number text-success" id="statGenuine">—</div>
+            <div class="stat-desc">Genuine Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 fade-up delay-3">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-warning-subtle"><i class="bi bi-shield-lock"></i></div>
+          <div>
+            <div class="stat-number text-warning" id="statAvgTrust">—</div>
+            <div class="stat-desc">Average Trust Score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Intelligence Stat Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4 fade-up">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-danger-subtle"><i class="bi bi-person-x"></i></div>
+          <div>
+            <div class="stat-number text-danger" id="statSuspiciousUsers">—</div>
+            <div class="stat-desc">Suspicious Users</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up delay-1">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-warning-subtle"><i class="bi bi-lightning-charge"></i></div>
+          <div>
+            <div class="stat-number text-warning" id="statDetectedBursts">—</div>
+            <div class="stat-desc">Detected Fraud Bursts</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-up delay-2">
+        <div class="stat-card glass-card">
+          <div class="stat-icon bg-cyan-subtle"><i class="bi bi-diagram-3"></i></div>
+          <div>
+            <div class="stat-number text-cyan" id="statCommunities">—</div>
+            <div class="stat-desc">Reviewer Communities</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Phase 3 Explainability & SHAP Section -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-7 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-bar-chart-steps me-2 text-cyan"></i>SHAP Global Feature Importance</h5>
+          <div class="chart-wrap"><canvas id="shapImportanceChart"></canvas></div>
+        </div>
+      </div>
+      <div class="col-lg-5 fade-up delay-1">
+        <div class="glass-card h-100">
+          <h5 class="chart-title"><i class="bi bi-cpu me-2 text-cyan"></i>AI Review Statistics (Groq Detector)</h5>
+          <div class="chart-wrap"><canvas id="aiStatsChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4: Main Charts Grid -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-5 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-pie-chart me-2"></i>Review Distribution</h5>
+          <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+        </div>
+      </div>
+      <div class="col-lg-7 fade-up delay-1">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-bar-chart me-2"></i>Classification Breakdown</h5>
+          <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 5: Phase 2/3 Intelligence Charts Grid -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6 fade-up">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-graph-up me-2"></i>Timeline of Reviews</h5>
+          <div class="chart-wrap"><canvas id="timelineChart"></canvas></div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-up delay-1">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-activity me-2"></i>Fraud Burst Frequency Graph</h5>
+          <div class="chart-wrap"><canvas id="burstGraphChart"></canvas></div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-up delay-2">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-person-lines-fill me-2"></i>Reviewer Activity Graph</h5>
+          <div class="chart-wrap"><canvas id="reviewerActivityChart"></canvas></div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-up delay-3">
+        <div class="glass-card chart-card h-100">
+          <h5 class="chart-title"><i class="bi bi-diagram-2 me-2"></i>Community Size Chart (Louvain Clusters)</h5>
+          <div class="chart-wrap"><canvas id="communitySizeChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Predictions Table -->
+    <div class="glass-card fade-up delay-2">
+      <h5 class="mb-3"><i class="bi bi-clock-history me-2"></i>Recent Predictions</h5>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover tl-table mb-0">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Review Preview</th>
+              <th>Rating</th>
+              <th>Prediction</th>
+              <th>Confidence</th>
+            </tr>
+          </thead>
+          <tbody id="recentTableBody">
+            <tr><td colspan="5" class="text-muted text-center py-4">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

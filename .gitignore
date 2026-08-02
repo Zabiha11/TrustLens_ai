@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+uploads/*
+!uploads/.gitkeep
+data/prediction_stats.json

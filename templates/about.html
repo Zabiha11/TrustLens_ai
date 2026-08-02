@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}About — {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="page-section">
+  <div class="container">
+    <div class="page-header fade-up">
+      <h1 class="page-title"><i class="bi bi-info-circle me-2"></i>About TrustLens AI</h1>
+      <p class="text-muted">A production-ready review fraud analytics platform that combines text classification, explainability, network intelligence, and temporal anomaly detection.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-8 fade-up">
+        <div class="glass-card mb-4">
+          <h4 class="mb-3">What It Does</h4>
+          <p>TrustLens AI analyzes current review content and uploaded datasets to surface suspicious review behavior. It combines TF-IDF text features, XGBoost classification, SHAP/LIME explainability, AI generation indicators, and dataset-driven fraud analytics.</p>
+
+          <h5 class="mt-4 mb-3">Core Capabilities</h5>
+          <ul class="about-list">
+            <li><strong>Single Review Prediction:</strong> Real-time fraud scoring for any pasted review text.</li>
+            <li><strong>Product URL Analysis:</strong> Attempts review retrieval from supported public product pages.</li>
+            <li><strong>Batch CSV Upload:</strong> Loads datasets, persists analytics, and recalculates visualizations.</li>
+            <li><strong>Explainability:</strong> SHAP and LIME outputs explain model decisions for each review.</li>
+            <li><strong>Behavioral Intelligence:</strong> Reviewer risk scoring and network community detection from the current dataset.</li>
+            <li><strong>Temporal Detection:</strong> Burst and velocity anomaly detection using time-series patterns.</li>
+          </ul>
+        </div>
+
+        <div class="glass-card fade-up delay-1">
+          <h4 class="mb-3">Current Architecture</h4>
+          <p class="text-muted small mb-3">TrustLens AI is designed as a restart-safe Flask application with persisted dataset and analytics state.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="timeline-badge current">Backend</span>
+              <span>Flask blueprints, persistent JSON summary store, active dataset CSV persistence.</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-badge">ML</span>
+              <span>TF-IDF vectorization + XGBoost classifier with production inference validation.</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-badge">XAI</span>
+              <span>SHAP feature importance and LIME word-level explainability per review.</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-badge">Analytics</span>
+              <span>Network, reviewer risk, temporal burst, and AI detection metrics generated from current input data.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 fade-up delay-2">
+        <div class="glass-card">
+          <h5 class="mb-3">Dataset Handling</h5>
+          <p class="text-muted small">The app persists active dataset rows to CSV and uses them for dashboard and investigation analytics. Uploaded data and current predictions update charts and risk calculations immediately.</p>
+          <table class="table table-sm table-dark tl-table">
+            <tbody>
+              <tr><td>user_id</td><td class="text-muted">Reviewer identifier</td></tr>
+              <tr><td>product_id</td><td class="text-muted">Product or item identifier</td></tr>
+              <tr><td>review_text</td><td class="text-success">ML input</td></tr>
+              <tr><td>rating</td><td class="text-success">Numeric feature</td></tr>
+              <tr><td>timestamp</td><td class="text-success">Temporal analytics input</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
