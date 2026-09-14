@@ -8,3 +8,4 @@ uploads/*
 data/prediction_stats.json
 # Large datasets
 data/YelpChi/YelpChi.mat
+data/YelpChi/YelpChi.mat
